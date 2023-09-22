@@ -1,0 +1,83 @@
+#!/bin/bash
+. ~/.config/HyprV/hyprv.conf
+
+get_theme() {
+    # Check which waybar theme is set
+    THEMEIS=$(readlink -f ~/.config/waybar/style.css | cut -d '/' -f8)
+
+    #if the theme is not dark then we need to switch to it
+    if [[ $THEMEIS == "style-dark.css" ]]; then
+        SWITCHTO="-dark"
+        MODESTR="Dark"
+    else
+        SWITCHTO=""
+        MODESTR="Light"
+    fi
+}
+
+update_theme() {
+    #set the xfce and GTK theme
+    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita$SWITCHTO"
+    xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita$SWITCHTO"
+    gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+}
+
+restart_waybar() {
+    #restart the waybar
+    pkill waybar
+    waybar & 
+
+    waybar --config ~/.config/HyprV/waybar/conf/config-bottom.jsonc
+}
+
+linking_files() {
+    get_theme
+
+    #set the waybar config
+    ln -sf ~/.config/HyprV/waybar/conf/config.jsonc ~/.config/waybar/config.jsonc
+    #set the waybar theme
+    ln -sf ~/.config/HyprV/waybar/style/'style'$SWITCHTO.css ~/.config/waybar/style.css
+    #set the wofi theme
+    ln -sf ~/.config/HyprV/wofi/style/'style'$SWITCHTO.css ~/.config/wofi/style.css
+}
+
+set_current_background() {
+    get_theme
+    
+    if [[ ! -z "$SET_BG" ]]; then
+        #set the current background
+        if [[ $THEMEIS == "style-dark.css" ]]; then
+            swww img ~/.config/HyprV/backgrounds/background-dark.jpg
+        else
+            swww img ~/.config/HyprV/backgrounds/background.jpg
+        fi
+    else
+        swww img $SET_BG
+        wal -q -i $SET_BG
+        pkill -USR1 kitty
+    fi
+}
+
+if [[ "$1" == "setbg" ]]; then
+    set_current_background
+    update_theme
+    restart_waybar
+elif [[ "$1" == "link" ]]; then
+    linking_files
+fi
+
+# need to show the version and tooltip
+
+TOOLTIP='Default Keybinds\n'\
+'SUPER + Q = Start Kitty\n'\
+'SUPER + F4 = Close Window\n'\
+'SUPER + L = Lock Screen\n'\
+'SUPER + M = Logout menu\n'\
+'SUPER + E = File Manager\n'\
+'SUPER + V = Toggle Float\n'\
+'SUPER + SPACE = App Launcher\n'\
+'SUPER + S = Screenshot\n'\
+'ALT + V = Open clipboard manager'
+
+echo '{"text": "''", "tooltip": "'$TOOLTIP'"}'

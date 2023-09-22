@@ -1,0 +1,66 @@
+sw_volume: 100
+audio_device_state:1:pulseaudio
+audio_device_state:1:Visualizer
+state: stop
+current: 24
+random: 1
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:playlists/Self Healing/Lil Nas X - Old Town Road.mp3
+1:playlists/Self Healing/Coldplay - A Sky Full of Stars.mp3
+2:playlists/Self Healing/Harry Styles - As It Was.mp3
+3:playlists/Self Healing/Travis Scott - SICKO MODE.mp3
+4:playlists/Self Healing/Camila Cabello - Bam Bam (feat. Ed Sheeran).mp3
+5:playlists/Self Healing/League Of Legends - Burn It All Down.mp3
+6:playlists/Self Healing/Marshmello - Bye Bye.mp3
+7:playlists/Self Healing/Alesso - Chasing Stars.mp3
+8:playlists/Self Healing/Ikimonogakari - Blue Bird.mp3
+9:playlists/Self Healing/Morgenshtern - Cristal & MOYOT.mp3
+10:playlists/Self Healing/NICO Touches the Walls - Diver.mp3
+11:playlists/Self Healing/Imagine Dragons - Enemy.mp3
+12:playlists/Self Healing/Vaultboy - everything sucks.mp3
+13:playlists/Self Healing/The Kid LAROI - NOT SOBER (feat. Polo G & Stunna Gambino).mp3
+14:playlists/Self Healing/Bankrol Hayden - Fuck Love.mp3
+15:playlists/Self Healing/The Kid LAROI - GO.mp3
+16:playlists/Self Healing/DJ Khaled - Juice WRLD DID (feat. Juice WRLD).mp3
+17:playlists/Self Healing/Juice WRLD - Lucid Dreams.mp3
+18:playlists/Self Healing/NEFFEX - Grateful.mp3
+19:playlists/Self Healing/Does - Guren.mp3
+20:playlists/Self Healing/Glass Animals - Heat Waves.mp3
+21:playlists/Self Healing/The Chainsmokers - High.mp3
+22:playlists/Self Healing/Justin Bieber - Ghost.mp3
+23:playlists/Self Healing/YAMAZARU - Kaze.mp3
+24:playlists/Self Healing/Y2K - Lalala.mp3
+25:playlists/Self Healing/Charlie Puth - Light Switch.mp3
+26:playlists/Self Healing/SUKIMASWITCH - Line.mp3
+27:playlists/Self Healing/Long Shot Party - Distance.mp3
+28:playlists/Self Healing/Ghost - Mary On A Cross.mp3
+29:playlists/Self Healing/Mary-On-A-Cross-Slowed-Reverb.mp3
+30:playlists/Self Healing/Jimmy Gnecco - It Has To Be This Way.mp3
+31:playlists/Self Healing/24kGoldn - Mood (feat. iann dior).mp3
+32:playlists/Self Healing/NICO Touches the Walls - Niwaka Ame Nimo Makezu.mp3
+33:playlists/Self Healing/DJ Khaled - No Brainer (feat. Justin Bieber, Chance the Rapper & Quavo).mp3
+34:playlists/Self Healing/Marshmello - Numb.mp3
+35:playlists/Self Healing/Owl City - Fireflies.mp3
+36:playlists/Self Healing/Lil Tecca - Ransom.mp3
+37:playlists/Self Healing/The Chainsmokers - I Love U.mp3
+38:playlists/Self Healing/Post Malone - Sunflower.mp3
+39:playlists/Self Healing/Post Malone - Congratulations.mp3
+40:playlists/Self Healing/Shawn Mendes - Summer Of Love.mp3
+41:playlists/Self Healing/Nicky Youre - Sunroof.mp3
+42:playlists/Self Healing/OneRepublic - Sunshine.mp3
+43:playlists/Self Healing/League Of Legends - The Call.mp3
+44:playlists/Self Healing/SiM - The Rumbling.mp3
+45:playlists/Self Healing/Falconshield - This Is War 7.mp3
+46:playlists/Self Healing/The Kid LAROI - Thousand Miles.mp3
+47:playlists/Self Healing/Billie Eilish - you should see me in a crown.mp3
+48:playlists/Self Healing/Shawn Mendes - When You're Gone.mp3
+49:playlists/Self Healing/Alan Walker - Not You.mp3
+50:playlists/Self Healing/Radwimps - Nandemonaiya - movie ver..mp3
+51:playlists/Self Healing/Justin Bieber - Yummy.mp3
+playlist_end
