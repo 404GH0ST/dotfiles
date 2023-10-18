@@ -69,7 +69,8 @@ tooltip label{
 #temperature,
 #workspaces,
 #idle_inhibitor,
-#backlight {
+#backlight,
+#custom-choose {
     background: @background;
     opacity: 1;
     padding: 0px 8px;
@@ -90,6 +91,10 @@ tooltip label{
     color: @color8;
 }
 
+#tray menu {
+    color: @color8;
+}
+
 #clock,
 #idle_inhibitor,
 #custom-update {
@@ -103,6 +108,11 @@ tooltip label{
 #custom-shuffle {
     color: @color7;
 }
+
+#custom-choose {
+    color: @color8;
+}
+
 #workspaces {
     padding-right: 0px;
     padding-left: 5px;

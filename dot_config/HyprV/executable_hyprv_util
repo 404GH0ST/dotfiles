@@ -28,7 +28,8 @@ restart_waybar() {
     pkill waybar
     waybar & 
 
-    waybar --config ~/.config/HyprV/waybar/conf/config-bottom.jsonc
+    # Bottom waybar is disabled for now
+    # waybar --config ~/.config/HyprV/waybar/conf/config-bottom.jsonc
 }
 
 linking_files() {

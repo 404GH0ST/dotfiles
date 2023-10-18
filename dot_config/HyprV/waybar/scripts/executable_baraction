@@ -57,4 +57,5 @@ mako &
 pkill waybar
 waybar &
 
-waybar --config ~/.config/HyprV/waybar/conf/config-bottom.jsonc
+# Disabled bottom waybar
+# waybar --config ~/.config/HyprV/waybar/conf/config-bottom.jsonc
