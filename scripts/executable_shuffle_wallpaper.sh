@@ -14,7 +14,7 @@ wal -c
 wal -q -i $wallpaper
 pkill -USR1 kitty
 pkill -USR2 cava
-pkill waybar
+killall -SIGUSR2 waybar
 #waybar &
 
 # Bottom waybar disabled for now

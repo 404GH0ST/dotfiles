@@ -18,6 +18,7 @@
     ],
     "modules-right": [
         "tray",
+        "custom/choose",
         "custom/shuffle",
         "cpu",
         "memory",
@@ -25,7 +26,8 @@
         "pulseaudio#microphone",
         "backlight",
         "temperature",
-        "network",
+        "network#ethernet",
+        "network#wifi",
         "custom/power_profile",
         "battery",
         "custom/myhyprv",
@@ -147,8 +149,21 @@
         "on-scroll-down": "~/.config/HyprV/waybar/scripts/brightness --dec"
     },
 
-    "network": {
+    "network#ethernet": {
         "interface": "enp2s0",
+        "format": "{ifname}",
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-disconnected": "", //An empty format will hide the module.
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50
+    },
+
+    "network#wifi": {
+        "interface": "wlan0",
         "format": "{ifname}",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ipaddr}/{cidr} ",
@@ -182,12 +197,12 @@
 
     "custom/shuffle": {
         "format": "",
-        "on-click": "~/scripts/shuffle_wallpaper.sh",
+        "on-click": "~/scripts/shuffle_wallpaper.sh"
     },
 
     "custom/choose": {
         "format": " ",
-        "on-click": "kitty -o allow_remote_control=yes --title choose-wallpaper sh -c '~/scripts/list_wallpaper.sh'"
+        "on-click": "kitty bash -c '~/scripts/list_wallpaper.sh'"
     }
 
 }
