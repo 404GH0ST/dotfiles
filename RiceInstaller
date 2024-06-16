@@ -93,8 +93,8 @@ fi
 
 logo "Downloading dotfiles"
 
-repo_url="https://github.com/404GH0ST/bspwm-dotfiles"
-repo_dir="$HOME/bspwm-dotfiles"
+repo_url="https://github.com/404GH0ST/dotfiles"
+repo_dir="$HOME/dotfiles"
 
 # Verifies if the folder of the repository exists, and if it does, deletes it
 if [ -d "$repo_dir" ]; then
