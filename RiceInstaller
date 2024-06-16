@@ -57,7 +57,7 @@ logo "Installing needed packages.."
 
 dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
 	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
-	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland redshift rofi rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland redshift rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
 	pacman -Q "$1" &>/dev/null
@@ -179,6 +179,12 @@ else
 fi
 
 cp -f "$repo_dir"/home/.zshrc "$HOME"
+
+if [ -d $HOME/.local/share/rofi/ ]; then
+	mkdir -p $HOME/.local/share/rofi/themes
+fi
+cp -f "$repo_dir"/home/.local/share/rofi/themes/catppuccin-mocha.rasi
+
 fc-cache -rv >/dev/null 2>&1
 
 if bash $repo_dir/scripts/install_grub_theme.sh 2>>RiceError.log; then
@@ -210,7 +216,7 @@ sleep 5
 
 ########## ---------- Installing Paru & others ---------- ##########
 
-logo "installing Paru, cava, python-pyamdgpuinfo & oh-my-posh"
+logo "installing Paru, rofi, cava, python-pyamdgpuinfo & oh-my-posh"
 
 # Installing Paru
 if command -v paru >/dev/null 2>&1; then
@@ -249,6 +255,15 @@ fi
 
 # Installing oh-my-posh
 curl -s https://ohmyposh.dev/install.sh | sudo bash -s
+
+# Installing rofi-lbonn-wayland-git
+
+if command -v rofi >/dev/null 2>&1; then
+	printf "\n%s%srofi-lbonn-wayland-git is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "\n%s%sInstalling rofi-lbonn-wayland-git, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S rofi-lbonn-wayland-git --skipreview --noconfirm
+fi
 
 ########## ---------- Enabling MPD service ---------- ##########
 
