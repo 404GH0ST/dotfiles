@@ -1,0 +1,56 @@
+import = [ "~/.config/alacritty/catppuccin-mocha.toml" ]
+
+live_config_reload = true
+
+[shell]
+program = "/usr/bin/zsh"
+
+[window]
+dynamic_title = true
+dynamic_padding = true
+
+[window.padding]
+x = 5
+y = 5
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[bell]
+command = { program = "paplay", args = [ "/home/agus/.config/alacritty/bell_sound/champions_2021_kill.mp3" ] }
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+blink_interval = 500
+unfocused_hollow = true
+thickness = 0.15
+
+[cursor.style]
+blinking = "On"
+shape = "Beam"
+
+[font]
+size = 10
+builtin_box_drawing = true
+
+[font.normal]
+family = "JetBrainsMono NF"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono NF"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono NF"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono NF"
+style = "Bold Italic"
+
+[env]
+TERM = "xterm-256color"
