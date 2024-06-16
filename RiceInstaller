@@ -55,7 +55,7 @@ clear
 
 logo "Installing needed packages.."
 
-dependencies=(alacritty ark base-devel brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
+dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
 	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
 	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse pavucontrol playerctl polkit-gnome python-gobject python-pyamdgpuinfo parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg redshift rofi rustup sddm tmux ttf-inconsolata ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 	ttf-joypixels ttf-terminus-nerd udiskie vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
@@ -220,8 +220,9 @@ else
 	printf "%s%sInstalling paru%s\n" "${BLD}" "${CBL}" "${CNC}"
 	{
 		cd "$HOME" || exit
-		git clone https://aur.archlinux.org/paru-bin.git
-		cd paru-bin || exit
+		rustup default stable
+		git clone https://aur.archlinux.org/paru.git
+		cd paru || exit
 		makepkg -si --noconfirm
 	} || {
 		printf "\n%s%sFailed to install Paru. You may need to install it manually%s\n" "${BLD}" "${CRE}" "${CNC}"
