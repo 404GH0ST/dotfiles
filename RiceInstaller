@@ -57,8 +57,8 @@ logo "Installing needed packages.."
 
 dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
 	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
-	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse pavucontrol playerctl polkit-gnome python-gobject python-pyamdgpuinfo parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg redshift rofi rustup sddm tmux ttf-inconsolata ttf-jetbrains-mono ttf-jetbrains-mono-nerd
-	ttf-joypixels ttf-terminus-nerd udiskie vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland redshift rofi rustup sddm tmux ttf-inconsolata ttf-jetbrains-mono ttf-jetbrains-mono-nerd
+	ttf-joypixels ttf-terminus-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
 	pacman -Q "$1" &>/dev/null
@@ -211,7 +211,7 @@ sleep 5
 
 ########## ---------- Installing Paru & others ---------- ##########
 
-logo "installing Paru, & cava"
+logo "installing Paru, cava, python-pyamdgpuinfo & oh-my-posh"
 
 # Installing Paru
 if command -v paru >/dev/null 2>&1; then
@@ -221,6 +221,9 @@ else
 	{
 		cd "$HOME" || exit
 		rustup default stable
+		rustup update
+		eval `ssh-agent -s`
+		ssh-add
 		git clone https://aur.archlinux.org/paru.git
 		cd paru || exit
 		makepkg -si --noconfirm
@@ -236,6 +239,17 @@ else
 	printf "\n%s%sInstalling cava, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
 	paru -S cava --skipreview --noconfirm
 fi
+
+# Installing python-pyamdgpuinfo
+if command -v  python-pyamdgpuinfo >/dev/null 2>&1; then
+	printf "\n%s%spython-pyamdgpuinfo is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "\n%s%sInstallin python-pyamdgpuinfo, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S  python-pyamdgpuinfo --skipreview --noconfirm
+fi
+
+# Installing oh-my-posh
+curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 
 ########## ---------- Enabling MPD service ---------- ##########
 
