@@ -117,7 +117,7 @@ sleep 10
 
 [ ! -d "$backup_folder" ] && mkdir -p "$backup_folder"
 
-for folder in bspwm cava alacritty picom rofi eww sxhkd dunst kitty polybar ncmpcpp ranger tmux zsh mpd paru; do
+for folder in cava alacritty dunst ncmpcpp zsh mpd paru; do
 	if [ -d "$HOME/.config/$folder" ]; then
 		if mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date" 2>>RiceError.log; then
 			printf "%s%s%s folder backed up successfully at %s%s/%s_%s%s\n" "${BLD}" "${CGR}" "$folder" "${CBL}" "$backup_folder" "$folder" "$date" "${CNC}"
@@ -129,30 +129,6 @@ for folder in bspwm cava alacritty picom rofi eww sxhkd dunst kitty polybar ncmp
 	else
 		printf "%s%s%s folder does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "$folder" "${CYE}" "${CNC}"
 		sleep 1
-	fi
-done
-
-for folder in "$HOME"/.mozilla/firefox/*.default-release/chrome; do
-	if [ -d "$folder" ]; then
-		if mv "$folder" "$backup_folder"/chrome_"$date" 2>>RiceError.log; then
-			printf "%s%sChrome folder backed up successfully at %s%s/chrome_%s%s\n" "${BLD}" "${CGR}" "${CBL}" "$backup_folder" "${date}" "${CNC}"
-		else
-			printf "%s%sFailed to backup Chrome folder. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "${CBL}" "${CNC}"
-		fi
-	else
-		printf "%s%sThe folder Chrome does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "${CYE}" "${CNC}"
-	fi
-done
-
-for file in "$HOME"/.mozilla/firefox/*.default-release/user.js; do
-	if [ -f "$file" ]; then
-		if mv "$file" "$backup_folder"/user.js_"$date" 2>>RiceError.log; then
-			printf "%s%suser.js file backed up successfully at %s%s/user.js_%s%s\n" "${BLD}" "${CGR}" "${CBL}" "$backup_folder" "${date}" "${CNC}"
-		else
-			printf "%s%sFailed to backup user.js file. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "${CBL}" "${CNC}"
-		fi
-	else
-		printf "%s%sThe file user.js does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "${CYE}" "${CNC}"
 	fi
 done
 
@@ -190,32 +166,6 @@ for dirs in "$repo_dir"/config/*; do
 	fi
 done
 
-for folder in applications asciiart fonts startup-page; do
-	if cp -R "$repo_dir"/misc/$folder ~/.local/share/ 2>>RiceError.log; then
-		printf "%s%s%s %sfolder copied succesfully!%s\n" "${BLD}" "${CYE}" "$folder" "${CGR}" "${CNC}"
-		sleep 1
-	else
-		printf "%s%s%s %sfolder failed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "$folder" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-		sleep 1
-	fi
-done
-
-if cp -R "$repo_dir"/misc/bin ~/.local/ 2>>RiceError.log; then
-	printf "%s%sbin %sfolder copied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-	sleep 1
-else
-	printf "%s%sbin %sfolder failed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-	sleep 1
-fi
-
-if cp -R "$repo_dir"/misc/firefox/* ~/.mozilla/firefox/*.default-release/ 2>>RiceError.log; then
-	printf "%s%sFirefox theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-	sleep 1
-else
-	printf "%s%sFirefox theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-	sleep 1
-fi
-
 if sudo cp "$repo_dir"/misc/sddm/sddm.conf /etc/sddm.conf 2>>RiceError.log; then
 	if sudo tar xzf "$repo_dir"/misc/sddm/sugar-candy.tar.gz --directory /usr/share/sddm/themes/ 2>>RiceError.log; then
 		printf "%s%sSddm sugar candy theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
@@ -229,8 +179,6 @@ else
 	sleep 1
 fi
 
-sed -i "s/user_pref(\"browser.startup.homepage\", \"file:\/\/\/home\/z0mbi3\/.local\/share\/startup-page\/index.html\")/user_pref(\"browser.startup.homepage\", \"file:\/\/\/home\/$USER\/.local\/share\/startup-page\/index.html\")/" "$HOME"/.mozilla/firefox/*.default-release/user.js
-sed -i "s/name: 'gh0stzk'/name: '$USER'/" "$HOME"/.local/share/startup-page/config.js
 cp -f "$repo_dir"/home/.zshrc "$HOME"
 fc-cache -rv >/dev/null 2>&1
 
