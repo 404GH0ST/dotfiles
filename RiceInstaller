@@ -198,6 +198,14 @@ else
 	sleep 1
 fi
 
+if bash $repo_dir/scripts/configure_nvidia.sh 2>>RiceError.log; then
+	printf "%s%sNvidia %sconfigured succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
+	sleep 1
+else
+	printf "%s%sNvidia %sfailed to been configured, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+	sleep 1
+fi
+
 printf "\n\n%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
 sleep 5
 
