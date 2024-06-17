@@ -21,6 +21,15 @@ logo() {
 	printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
 }
 
+nvidia_detect() {
+	readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
+	if grep -iq nvidia <<<"${dGPU[@]}"; then
+		return 0
+	else
+		return 1
+	fi
+}
+
 ########## ---------- You must not run this as root ---------- ##########
 
 if [ "$(id -u)" = 0 ]; then
@@ -56,7 +65,7 @@ clear
 logo "Installing needed packages.."
 
 dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza fastfetch firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
-	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libadwaita libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
+	jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
 	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland redshift rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
@@ -218,13 +227,28 @@ else
 	sleep 1
 fi
 
-if bash $repo_dir/scripts/configure_nvidia.sh 2>>RiceError.log; then
-	printf "%s%sNvidia %sconfigured succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-	sleep 1
-else
-	printf "%s%sNvidia %sfailed to been configured, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-	sleep 1
+if nvidia_detect; then
+	if bash $repo_dir/scripts/configure_nvidia.sh 2>>RiceError.log; then
+		printf "%s%sNvidia %sconfigured succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
+		sleep 1
+	else
+		printf "%s%sNvidia %sfailed to been configured, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+		sleep 1
+	fi
 fi
+
+# Installing Firefox-UI-Fix
+read -p "Do you want to install Firefox-UI-Fix plugin? (y/n)" choice
+
+case "${choice}" in
+[Yy]*)
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/black7375/Firefox-UI-Fix/master/install.sh)"
+	;;
+[Nn]*)
+	printf "%s%sSo be it\n" "${BLD}" "${CYE}"
+	;;
+*) ;;
+esac
 
 printf "\n\n%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
 sleep 5
