@@ -55,8 +55,8 @@ clear
 
 logo "Installing needed packages.."
 
-dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
-	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
+dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza fastfetch firefox feh ffmpegthumbs git gst-plugin-pipewire hyprland imagemagick jq
+	jgmenu libdbusmenu-gtk3 libva-nvidia-driver libadwaita libnotify libwebp kde-cli-tools mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet nvidia nvidia-utils os-prober pamixer pacman-contrib
 	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland redshift rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
@@ -116,7 +116,7 @@ sleep 10
 
 [ ! -d "$backup_folder" ] && mkdir -p "$backup_folder"
 
-for folder in cava alacritty dunst ncmpcpp zsh mpd paru; do
+for folder in cava alacritty dunst ncmpcpp zsh mpd paru dunst hypr mpd ncmpcpp waybar xsettingsd oh-my-posh rofi; do
 	if [ -d "$HOME/.config/$folder" ]; then
 		if mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date" 2>>RiceError.log; then
 			printf "%s%s%s folder backed up successfully at %s%s/%s_%s%s\n" "${BLD}" "${CGR}" "$folder" "${CBL}" "$backup_folder" "$folder" "$date" "${CNC}"
@@ -183,9 +183,24 @@ cp -f "$repo_dir"/home/.zshrc "$HOME"
 if [ -d $HOME/.local/share/rofi/ ]; then
 	mkdir -p $HOME/.local/share/rofi/themes
 fi
-cp -f "$repo_dir"/home/.local/share/rofi/themes/catppuccin-mocha.rasi
+cp -f "$repo_dir"/home/.local/share/rofi/themes/catppuccin-mocha.rasi "$HOME"/.local/share/rofi/themes/catppuccin-mocha.rasi
 
 fc-cache -rv >/dev/null 2>&1
+
+if [ -d $HOME/.icons/default ]; then
+	mkdir -p $HOME/.icons/default
+fi
+
+cp -f "$repo_dir"/home/.icons/default/index.theme "$HOME"/.icons/default/index.theme
+unzip "$repo_dir"/mics/icons/catppuccin-mocha-mauve-cursors.zip -d $HOME/.icons/
+
+cp -f "$repo_dir"/home/.gtkrc-2.0 "$HOME"
+
+if [ -d $HOME/.themes ]; then
+	mkdir $HOME/.themes
+fi
+
+unzip "$repo_dir"/misc/gtk/catppuccin-mocha-mauve.zip -d "$HOME"/.themes/
 
 if bash $repo_dir/scripts/install_grub_theme.sh 2>>RiceError.log; then
 	printf "%s%sGrub catppuccin theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
