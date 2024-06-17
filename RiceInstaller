@@ -64,7 +64,7 @@ clear
 
 logo "Installing needed packages.."
 
-dependencies=(alacritty ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland imagemagick jq
+dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland imagemagick jq
 	jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools kvantum mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
 	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
@@ -189,10 +189,16 @@ fi
 
 cp -f "$repo_dir"/home/.zshrc "$HOME"
 
-if [ -d $HOME/.local/share/rofi/ ]; then
+if [ -d $HOME/.local/share/rofi ]; then
 	mkdir -p $HOME/.local/share/rofi/themes
 fi
 cp -f "$repo_dir"/home/.local/share/rofi/themes/catppuccin-mocha.rasi "$HOME"/.local/share/rofi/themes/catppuccin-mocha.rasi
+
+if [ -d $HOME/.local/share/bin ]; then
+	mkdir -p $HOME/.local/share/bin
+fi
+
+cp -r "$repo_dir"/home/.local/share/bin "$HOME"/.local/share/
 
 fc-cache -rv >/dev/null 2>&1
 bat cache --build
