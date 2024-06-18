@@ -13,6 +13,7 @@
   ],
   "modules-right": [
     "tray",
+    "bluetooth",
     "mpd",
     "memory",
     "cpu",
@@ -205,7 +206,7 @@
     "format": "{temperatureC}°C "
   },
   "mpd": {
-    "format": " {artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+    "format": " {artist} - {album} - {title}",
     "format-disconnected": "Disconnected ",
     "format-stopped": "Stopped ",
     "max-length": 40,
@@ -229,5 +230,15 @@
     },
     "tooltip-format": "MPD (connected)",
     "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "bluetooth": {
+    // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+    "format": "󰂯 {status}",
+    "format-disabled": "", // an empty format will hide the module
+    "format-no-controller": "",
+    "format-connected": " {num_connections} connected",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
   }
 }

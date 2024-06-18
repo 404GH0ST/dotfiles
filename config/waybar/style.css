@@ -54,6 +54,7 @@ window#waybar.hidden {
 
 #backlight-slider,
 #pulseaudio-slider,
+#bluetooth,
 #cpu,
 #mpd,
 #temperature,
@@ -90,6 +91,9 @@ window#waybar.hidden {
 #window {
   background-color: @surface0;
   color: @subtext1;
+}
+#bluetooth {
+  background-color: @blue;
 }
 
 #mpd {

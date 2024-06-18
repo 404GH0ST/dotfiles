@@ -1,8 +1,8 @@
 [global]
     monitor = 0
-    follow = none
+    follow = mouse 
     width = 300
-    height = 145
+    height = 300 
     origin = top-right
     alignment = "left"
     vertical_alignment = "center"
@@ -21,7 +21,7 @@
     progress_bar_max_width = 300
     separator_height = 2
     frame_width = 2
-    frame_color = "#313244" 
+    frame_color = "#cba6f7" 
     separator_color = "frame" 
     corner_radius = 8 
     transparency = 0 
@@ -32,7 +32,7 @@
     history_length = 20 
     show_age_threshold = 60 
     markup = "full" 
-    font = "monospace 10" 
+    font = "JetBrainsMono Nerd Font 10" 
     format = "<b>%s</b>\n%b" 
     word_wrap = "yes" 
     sort = "yes" 

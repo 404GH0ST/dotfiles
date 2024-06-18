@@ -359,6 +359,7 @@ systemctl --user enable --now mpd.service
 
 printf "\n%s%sEnabling and starting the sddm service%s\n" "${BLD}" "${CYE}" "${CNC}"
 sudo systemctl enable sddm.service
+sudo systemctl enable bluetooth.service
 
 printf "%s%sDone!!%s\n\n" "${BLD}" "${CGR}" "${CNC}"
 sleep 2
