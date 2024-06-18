@@ -9,7 +9,7 @@
           "foreground": "#a6e3a1",
           "leading_diamond": "\ue0b6",
           "properties": {
-            "style": "mixed"
+            "style": "agnoster_full"
           },
           "style": "diamond",
           "template": "\ue5ff {{ .Path }}",

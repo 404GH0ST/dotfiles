@@ -10,7 +10,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
+  then PATH="$HOME/.local/bin:$HOME/.local/share/bin:$PATH"
 fi
 
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
@@ -114,6 +114,8 @@ alias musica="ncmpcpp"
 
 alias ls='eza --color=always --icons=always --group-directories-first'
 alias ll='eza -la --color=always --icons=always --group-directories-first'
+alias cat='bat'
+alias catp='bat -pp'
 
 #  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┌┬┐┌─┐┬─┐┌┬┐
 #  ├─┤│ │ │ │ │  └─┐ │ ├─┤├┬┘ │ 
