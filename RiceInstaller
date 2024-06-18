@@ -283,6 +283,14 @@ else
 	}
 fi
 
+# Installing swww
+if command -v swww >/dev/null 2>&1; then
+	printf "%s%sSwww is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "%s%sInstalling swww%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S swww --skipreview --noconfirm
+fi
+
 # Installing cava
 if command -v cava >/dev/null 2>&1; then
 	printf "\n%s%scava is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
