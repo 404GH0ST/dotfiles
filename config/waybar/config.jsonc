@@ -2,29 +2,30 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 34,
+  "height": 42,
   "modules-left": [
     "custom/logo",
-    "hyprland/workspaces"
+    "hyprland/workspaces",
+    "hyprland/window"
   ],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
     "tray",
+    "mpd",
     "memory",
+    "cpu",
+    "temperature",
     "network",
-    "pulseaudio",
+    "group/brightness",
+    "group/volume",
     "battery",
     "custom/power"
   ],
-  "wlr/taskbar": {
-    "format": "{icon}",
-    "on-click": "activate",
-    "on-click-right": "fullscreen",
-    "icon-theme": "WhiteSur",
-    "icon-size": 25,
-    "tooltip-format": "{title}"
+  "hyprland/window": {
+    "format": "󰄛 {initialTitle}",
+    "separate-outputs": true
   },
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -43,7 +44,7 @@
       "active": "󱓻",
       "urgent": "󱓻"
     },
-    "persistent_workspaces": {
+    "persistent-workspaces": {
       "1": [],
       "2": [],
       "3": [],
@@ -53,7 +54,7 @@
   },
   "memory": {
     "interval": 5,
-    "format": "󰍛 {}%",
+    "format": " {}%",
     "max-length": 10
   },
   "tray": {
@@ -101,6 +102,50 @@
     "on-click": "pamixer -t",
     "scroll-step": 1
   },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+  "group/volume": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "not-volume",
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider"
+    ]
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon}",
+    "format-icons": [
+      "󰃟",
+      "󰃠"
+    ],
+    "tooltip-format": "Brightness : {percent}%"
+  },
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "device": "intel_backlight"
+  },
+  "group/brightness": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "not-brightness",
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "backlight",
+      "backlight/slider"
+    ]
+  },
   "custom/logo": {
     "format": "  ",
     "tooltip": false,
@@ -146,5 +191,43 @@
     "format": "󰤆",
     "tooltip": false,
     "on-click": "~/.config/rofi/bin/powermenu.sh &"
+  },
+  "cpu": {
+    "interval": 1,
+    "format": "{usage}% ",
+    "max-length": 10
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 80,
+    "format-critical": "{temperatureC}°C ",
+    "format": "{temperatureC}°C "
+  },
+  "mpd": {
+    "format": " {artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+    "format-disconnected": "Disconnected ",
+    "format-stopped": "Stopped ",
+    "max-length": 40,
+    "interval": 10,
+    "consume-icons": {
+      "on": " " // Icon shows only when "consume" is on
+    },
+    "random-icons": {
+      "off": "<span color=\"#f38ba8\"></span> ", // Icon grayed out when "random" is off
+      "on": " "
+    },
+    "repeat-icons": {
+      "on": " "
+    },
+    "single-icons": {
+      "on": "1 "
+    },
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
   }
 }

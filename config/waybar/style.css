@@ -52,7 +52,13 @@ window#waybar.hidden {
   background-color: @red;
 }
 
+#backlight-slider,
+#pulseaudio-slider,
+#cpu,
+#mpd,
+#temperature,
 #memory,
+#window,
 #custom-power,
 #battery,
 #backlight,
@@ -67,6 +73,7 @@ window#waybar.hidden {
   color: @mantle;
 }
 
+
 #custom-power {
   margin-right: 6px;
 }
@@ -78,6 +85,27 @@ window#waybar.hidden {
   font-size: 15px;
   border-radius: 8px 0px 0px 8px;
   color: @sapphire;
+}
+
+#window {
+  background-color: @surface0;
+  color: @subtext1;
+}
+
+#mpd {
+  background-color: @lavender;
+}
+
+#cpu {
+  background-color: @sapphire;
+}
+
+#temperature {
+  background-color: @green;
+}
+
+#temperature.critical {
+  background-color: @red;
 }
 
 #memory {
@@ -111,12 +139,70 @@ window#waybar.hidden {
   background-color: @green;
 }
 
-#backlight {
-  background-color: @peach;
-}
-
 #pulseaudio {
   background-color: @yellow;
+  margin-right: 0px;
+  border-radius: 4px 0 0 4px;
+}
+
+#pulseaudio-slider {
+  background-color: @yellow;
+  margin-left: -10px;
+}
+
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    border-radius: 10px;
+    background-color: @base;
+    opacity: 0;
+    background-image: none;
+    border: none;
+}
+
+#pulseaudio-slider trough {
+    min-height: 5px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @red;
+}
+#pulseaudio-slider highlight {
+    min-width: 5px;
+    border-radius: 5px;
+    background-color: @red;
+}
+
+#backlight {
+  background-color: @pink;
+  margin-right: 0px;
+  border-radius: 4px 0 0 4px;
+}
+
+#backlight-slider {
+  background-color: @pink;
+  margin-left: -10px;
+}
+
+#backlight-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    border-radius: 10px;
+    background-color: @base;
+    opacity: 0;
+    background-image: none;
+    border: none;
+}
+
+#backlight-slider trough {
+    min-height: 5px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @red;
+}
+#backlight-slider highlight {
+    min-width: 5px;
+    border-radius: 5px;
+    background-color: @red;
 }
 
 #network {
