@@ -64,9 +64,9 @@ clear
 
 logo "Installing needed packages.."
 
-dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland imagemagick jq
+dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat cliphist dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland imagemagick jq
 	jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools kvantum mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
-	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm slurp swappy tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
 	pacman -Q "$1" &>/dev/null
@@ -303,7 +303,7 @@ fi
 if command -v python-pyamdgpuinfo >/dev/null 2>&1; then
 	printf "\n%s%spython-pyamdgpuinfo is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
 else
-	printf "\n%s%sInstallin python-pyamdgpuinfo, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	printf "\n%s%sInstalling python-pyamdgpuinfo, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
 	paru -S python-pyamdgpuinfo --skipreview --noconfirm
 fi
 
@@ -317,6 +317,27 @@ if command -v rofi >/dev/null 2>&1; then
 else
 	printf "\n%s%sInstalling rofi-lbonn-wayland-git, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
 	paru -S rofi-lbonn-wayland-git --skipreview --noconfirm
+fi
+
+if command -v grimblast >/dev/null 2>&1; then
+	printf "\n%s%sgrimblast is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "\n%s%sInstalling grimblast, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S grimblast-git --skipreview --noconfirm
+fi
+
+if command -v hyprpicker >/dev/null 2>&1; then
+	printf "\n%s%shyprpicker is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "\n%s%sInstalling hyprpicker, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S hyprpicker --skipreview --noconfirm
+fi
+
+if command -v hyprshade >/dev/null 2>&1; then
+	printf "\n%s%shyprshade is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "\n%s%sInstalling hyprshade, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+	paru -S hyprshade --skipreview --noconfirm
 fi
 
 ########## ---------- Enabling MPD service ---------- ##########
