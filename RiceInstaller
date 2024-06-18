@@ -72,6 +72,9 @@ is_installed() {
 	pacman -Q "$1" &>/dev/null
 }
 
+printf "%s%sSynchronizing package databases...%s\n" "${BLD}" "${CBL}" "${CNC}"
+sudo pacman -Sy
+
 printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
 for package in "${dependencies[@]}"; do
 	if ! is_installed "$package"; then
