@@ -209,7 +209,7 @@
     "format": " {artist} - {album} - {title}",
     "format-disconnected": "Disconnected ",
     "format-stopped": "Stopped ",
-    "max-length": 40,
+    "max-length": 30,
     "interval": 10,
     "consume-icons": {
       "on": " " // Icon shows only when "consume" is on

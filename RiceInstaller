@@ -64,7 +64,7 @@ clear
 
 logo "Installing needed packages.."
 
-dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat cliphist dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland imagemagick jq
+dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman clipcat cliphist dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland hyprlock imagemagick jq
 	jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools kvantum mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
 	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm slurp swappy tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 

@@ -1,0 +1,15 @@
+* {
+    base:     #1e1e2eff;
+    mantle: #181825ff;
+    crust: #11111bff;
+    text:     #cdd6f4ff;
+    blue:     #89b4faff;
+    green:    #a6e3a1ff;
+    red:      #f38ba8ff;
+    lavender: #b4befeff;
+    mauve:          #cba6f7ff;
+    surface0:       #313244ff;
+    surface1:       #45475aff;
+    surface2:       #585b70ff;
+    font:				 	"JetBrainsMono Nerd Font 10";
+}

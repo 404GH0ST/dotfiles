@@ -89,8 +89,8 @@ window#waybar.hidden {
 }
 
 #window {
-  background-color: @surface0;
-  color: @subtext1;
+  background-color: @base;
+  color: @text;
 }
 #bluetooth {
   background-color: @blue;

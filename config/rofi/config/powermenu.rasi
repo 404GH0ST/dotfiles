@@ -7,18 +7,17 @@ configuration {
     location:                       4;
 }
 
-@import "./font.rasi"
-@import "./colors.rasi"
+@theme "~/.config/rofi/config/mocha.rasi"
 
 /* Line Responsible For Button Layouts */
 /* BUTTON = TRUE */
 
 window {
     transparency:                   "real";
-    background-color:               @BG;
-    text-color:                     @FG;
+    background-color:               @base;
+    text-color:                     @text;
     border:                  	    2px;
-    border-color:                   @BGA;
+    border-color:                   @mauve;
     border-radius:                  10px;
     width:                          110px;
     x-offset:                       -2%;
@@ -29,10 +28,10 @@ prompt {
     enabled: 			            true;
     margin: 			            0px 0px 0px 8px;
     padding: 			            8px;
-    background-color: 		        @BG;
-    text-color: 		            @FG;
+    background-color: 		        @base;
+    text-color: 		            @surface1;
     border:                  	    0px 0px 2px 0px;
-    border-color:                   @BDR;
+    border-color:                   @mauve;
     border-radius:                  10px;
 }
 
@@ -40,48 +39,48 @@ textbox-prompt-colon {
     expand: 			            false;
     str: 			                "";
     border-radius:                  100%;
-    background-color:               @BG;
-    text-color:                     @BG;
+    background-color:               @base;
+    text-color:                     @base;
     padding:                        8px 12px 8px 12px;
     font:			                "JetBrainsMono Nerd Font 13";
 }
 
 entry {
-    background-color:               @BG;
-    text-color:                     @FG;
-    placeholder-color:              @FG;
+    background-color:               @base;
+    text-color:                     @surface1;
+    placeholder-color:              @surface1;
     expand:                         true;
     horizontal-align:               0;
     placeholder:                    "Search...";
     blink:                          true;
     border:                  	    0px 0px 2px 0px;
-    border-color:                   @BDR;
+    border-color:                   @mauve;
     border-radius:                  10px;
     padding:                        8px;
 }
 
 inputbar {
     children: 		                [ textbox-prompt-colon ];
-    background-color:               @BG;
-    text-color:                     @FG;
+    background-color:               @base;
+    text-color:                     @surface1;
     expand:                         false;
     border:                  	    0px 0px 0px 0px;
     border-radius:                  0px;
-    border-color:                   @BDR;
+    border-color:                   @mauve;
     margin:                         0px 0px 0px 0px;
     padding:                        0px;
     position:                       center;
 }
 
 case-indicator {
-    background-color:               @BG;
-    text-color:                     @FG;
+    background-color:               @base;
+    text-color:                     @surface1;
     spacing:                        0;
 }
 
 
 listview {
-    background-color:               @BG;
+    background-color:               @base;
     columns:                        1;
     lines:			                5;
     spacing:                        15px;
@@ -91,15 +90,15 @@ listview {
 }
 
 mainbox {
-    background-color:               @BG;
+    background-color:               @base;
     children:                       [ listview ];
     spacing:                        15px;
     padding:                        15px;
 }
 
 element {
-    background-color:               @BG;
-    text-color:                     @FG;
+    background-color:               @base;
+    text-color:                     @text;
     orientation:                    horizontal;
     border-radius:                  10px;
     padding:                        20px 20px 20px 15px;
@@ -117,7 +116,7 @@ element-icon {
 element-text {
     background-color: 		        inherit;
     text-color:       		        inherit;
-    font:			                "Symbols Nerd Font Mono 20";
+    font:			                "JetBrainsMono Nerd Font 20";
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
@@ -125,31 +124,31 @@ element-text {
 }
 
 element selected {
-    background-color:               @BGA;
-    text-color:                     @SEL;
+    background-color:               @mauve;
+    text-color:                     @surface0;
     border:                  	    0px 0px 0px 0px;
     border-radius:                  10px;
-    border-color:                   @BDR;
+    border-color:                   @mauve;
 }
 
 element.active,
 element.selected.urgent {
   background-color: @ON;
-  text-color: @BG;
+  text-color: @base;
   border-color: @ON;
 }
 
 element.selected.urgent {
-  border-color: @BDR;
+  border-color: @mauve;
 }
 
 element.urgent,
 element.selected.active {
   background-color: @OFF;
-  text-color: @BG;
+  text-color: @base;
   border-color: @OFF;
 }
 
 element.selected.active {
-  border-color: @BDR;
+  border-color: @mauve;
 }
