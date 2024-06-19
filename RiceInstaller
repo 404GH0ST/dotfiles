@@ -192,11 +192,6 @@ fi
 
 cp -f "$repo_dir"/home/.zshrc "$HOME"
 
-if [ -d $HOME/.local/share/rofi ]; then
-	mkdir -p $HOME/.local/share/rofi/themes
-fi
-cp -f "$repo_dir"/home/.local/share/rofi/themes/catppuccin-mocha.rasi "$HOME"/.local/share/rofi/themes/catppuccin-mocha.rasi
-
 if [ -d $HOME/.local/share/bin ]; then
 	mkdir -p $HOME/.local/share/bin
 fi
