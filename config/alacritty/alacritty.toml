@@ -17,9 +17,6 @@ y = 5
 history = 100000
 multiplier = 3
 
-[bell]
-command = { program = "paplay", args = [ "/home/agus/.config/alacritty/bell_sound/champions_2021_kill.mp3" ] }
-
 [selection]
 save_to_clipboard = true
 
