@@ -338,6 +338,9 @@ else
 	paru -S hyprshade --skipreview --noconfirm
 fi
 
+printf "\n%s%sInstalling zsh-vi-mode, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+paru -S zsh-vi-mode --skipreview --noconfirm
+
 ########## ---------- Enabling MPD service ---------- ##########
 
 logo "Enabling mpd service"
