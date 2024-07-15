@@ -1,14 +1,19 @@
 {
   "layer": "top",
   "position": "top",
+  "margin-top": 5,
+  "margin-right": 5,
+  "margin-left": 5,
   "spacing": 0,
   "height": 42,
+  "reload_style_on_change": true,
   "modules-left": [
     "custom/logo",
     "hyprland/workspaces",
     "hyprland/window"
   ],
   "modules-center": [
+    "custom/notifications",
     "clock"
   ],
   "modules-right": [
@@ -240,5 +245,31 @@
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+  },
+  "custom/notifications": {
+    "tooltip": false,
+    "format": "{icon} {}",
+    "rotate": 0,
+    "format-icons": {
+      "email-notification": "<span foreground='white'><sup></sup></span>",
+      "chat-notification": "󱋊<span foreground='white'><sup></sup></span>",
+      "warning-notification": "󱨪<span foreground='yellow'><sup></sup></span>",
+      "error-notification": "󱨪<span foreground='red'><sup></sup></span>",
+      "network-notification": "󱂇<span foreground='white'><sup></sup></span>",
+      "battery-notification": "󰁺<span foreground='white'><sup></sup></span>",
+      "update-notification": "󰚰<span foreground='white'><sup></sup></span>",
+      "music-notification": "󰝚<span foreground='white'><sup></sup></span>",
+      "volume-notification": "󰕿<span foreground='white'><sup></sup></span>",
+      "notification": "<span foreground='white'><sup></sup></span>",
+      "none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which dunstctl",
+    "exec": "~/.local/share/bin/notifications.py",
+    "on-click": "sleep 0.1 && dunstctl history-pop",
+    "on-click-middle": "dunstctl history-clear",
+    "on-click-right": "dunstctl close-all",
+    "interval": 1,
+    "escape": true
   }
 }
