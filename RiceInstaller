@@ -253,9 +253,17 @@ case "${choice}" in
 [Yy]*)
   bash -c "$(curl -fsSL https://raw.githubusercontent.com/black7375/Firefox-UI-Fix/master/install.sh)"
   ;;
-[Nn]*)
-  printf "%s%sSo be it\n" "${BLD}" "${CYE}"
+[Nn]*) ;;
+*) ;;
+esac
+
+read -p "Do you want to use my neovim configuration? (y/n)" choice
+
+case "${choice}" in
+[Yy]*)
+  git clone https://github.com/404GH0ST/my-nvchad-configuration.git ~/.config/nvim
   ;;
+[Nn]*) ;;
 *) ;;
 esac
 
