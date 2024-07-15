@@ -264,7 +264,7 @@ sleep 5
 
 ########## ---------- Installing Paru & others ---------- ##########
 
-logo "installing Paru, swww, cava, python-pyamdgpuinfo, oh-my-posh, rofi, grimblast, hyprpicker, hyprshade, and zsh-vi-mode"
+logo "installing Paru, swww, cava, python-pyamdgpuinfo, oh-my-posh, rofi, grimblast, hyprpicker, hyprshade, pipes-rs, cbonsai, and zsh-vi-mode"
 
 # Installing Paru
 if command -v paru >/dev/null 2>&1; then
@@ -289,7 +289,7 @@ else
 fi
 
 declare -A aur_pkgs
-aur_pkgs=(["swww"]="swww" ["cava"]="cava" ["python-pyamdgpuinfo"]="python-pyamdgpuinfo" ["oh-my-posh-bin"]="oh-my-posh" ["rofi-lbonn-wayland-git"]="rofi" ["grimblast-git"]="grimblast" ["hyprpicker"]="hyprpicker" ["hyprshade"]="hyprshade")
+aur_pkgs=(["swww"]="swww" ["cava"]="cava" ["python-pyamdgpuinfo"]="python-pyamdgpuinfo" ["oh-my-posh-bin"]="oh-my-posh" ["rofi-lbonn-wayland-git"]="rofi" ["grimblast-git"]="grimblast" ["hyprpicker"]="hyprpicker" ["hyprshade"]="hyprshade" ["pipes-rs"]="pipes-rs" ["cbonsai"]="cbonsai")
 
 for pkg in "${!aur_pkgs[@]}"; do
   install_aur_pkg "$pkg" "${aur_pkgs[$pkg]}"
