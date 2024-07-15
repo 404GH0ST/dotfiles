@@ -6,6 +6,7 @@ live_config_reload = true
 program = "/usr/bin/zsh"
 
 [window]
+opacity = 0.9
 dynamic_title = true
 dynamic_padding = true
 
