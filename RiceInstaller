@@ -17,32 +17,42 @@ backup_folder=~/.RiceBackup
 date=$(date +%Y%m%d-%H%M%S)
 
 logo() {
-	local text="${1:?}"
-	printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
+  local text="${1:?}"
+  printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
 }
 
 nvidia_detect() {
-	readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
-	if grep -iq nvidia <<<"${dGPU[@]}"; then
-		return 0
-	else
-		return 1
-	fi
+  readarray -t dGPU < <(lspci -k | grep -E "(VGA|3D)" | awk -F ': ' '{print $NF}')
+  if grep -iq nvidia <<<"${dGPU[@]}"; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+install_aur_pkg() {
+
+  if command -v $2 >/dev/null 2>&1; then
+    printf "\n%s%s$1 is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+  else
+    printf "\n%s%sInstalling $2, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
+    paru -S $1 --skipreview --noconfirm
+  fi
 }
 
 ########## ---------- You must not run this as root ---------- ##########
 
 if [ "$(id -u)" = 0 ]; then
-	echo "This script MUST NOT be run as root user."
-	exit 1
+  echo "This script MUST NOT be run as root user."
+  exit 1
 fi
 
 home_dir=$HOME
 current_dir=$(pwd)
 
 if [ "$current_dir" != "$home_dir" ]; then
-	printf "%s%sThe script must be executed from the HOME directory.%s\n" "${BLD}" "${CYE}" "${CNC}"
-	exit 1
+  printf "%s%sThe script must be executed from the HOME directory.%s\n" "${BLD}" "${CYE}" "${CNC}"
+  exit 1
 fi
 
 ########## ---------- Welcome ---------- ##########
@@ -51,12 +61,12 @@ logo "Welcome!"
 printf '%s%sThis script will check if you have the necessary dependencies, and if not, it will install them. Then, it will clone my repository in your HOME directory.\nAfter that, it will create a backup of your files, and then copy the new files to your computer.\n\nMy dotfiles DO NOT modify any of your system configurations.\nYou will be prompted for your root password to install missing dependencies and/or to switch to zsh shell if its not your default.\n\nThis script doesnt have the potential power to break your system, it only copies files from my repository to your HOME directory.%s\n\n' "${BLD}" "${CRE}" "${CNC}"
 
 while true; do
-	read -rp " Do you wish to continue? [y/N]: " yn
-	case $yn in
-	[Yy]*) break ;;
-	[Nn]*) exit ;;
-	*) printf " Error: just write 'y' or 'n'\n\n" ;;
-	esac
+  read -rp " Do you wish to continue? [y/N]: " yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) printf " Error: just write 'y' or 'n'\n\n" ;;
+  esac
 done
 clear
 
@@ -65,11 +75,11 @@ clear
 logo "Installing needed packages.."
 
 dependencies=(alacritty alsa-utils ark base-devel bat brightnessctl bluez bluez-utils blueman btop cliphist dunst dolphin eza fastfetch firefox feh ffmpegthumbs fzf git gst-plugin-pipewire hyprland hypridle hyprlock imagemagick jq
-	jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools kvantum mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
-	papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm slurp swappy tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
+  jgmenu libdbusmenu-gtk3 libadwaita libnotify libwebp kde-cli-tools kvantum mpc mpd neovim ncmpcpp noto-fonts-cjk npm nwg-look networkmanager network-manager-applet os-prober openssh pamixer pacman-contrib
+  papirus-icon-theme physlock pipewire pipewire-alsa pipewire-audio pipewire-pulse pavucontrol playerctl polkit-kde-agent python-gobject parallel qt5-imageformats qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt6-wayland qt5ct qt6ct redshift rustup sddm slurp swappy tmux ttf-jetbrains-mono ttf-jetbrains-mono-nerd udiskie unzip vim waybar webp-pixbuf-loader wireplumber xclip xdg-user-dirs xdg-desktop-portal-hyprland zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting)
 
 is_installed() {
-	pacman -Q "$1" &>/dev/null
+  pacman -Q "$1" &>/dev/null
 }
 
 printf "%s%sSynchronizing package databases...%s\n" "${BLD}" "${CBL}" "${CNC}"
@@ -77,18 +87,18 @@ sudo pacman -Sy
 
 printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
 for package in "${dependencies[@]}"; do
-	if ! is_installed "$package"; then
-		if sudo pacman -S "$package" --noconfirm >/dev/null 2>>RiceError.log; then
-			printf "%s%s%s %shas been installed succesfully.%s\n" "${BLD}" "${CYE}" "$package" "${CBL}" "${CNC}"
-			sleep 1
-		else
-			printf "%s%s%s %shas not been installed correctly. See %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "$package" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-			sleep 1
-		fi
-	else
-		printf '%s%s%s %sis already installed on your system!%s\n' "${BLD}" "${CYE}" "$package" "${CGR}" "${CNC}"
-		sleep 1
-	fi
+  if ! is_installed "$package"; then
+    if sudo pacman -S "$package" --noconfirm >/dev/null 2>>RiceError.log; then
+      printf "%s%s%s %shas been installed succesfully.%s\n" "${BLD}" "${CYE}" "$package" "${CBL}" "${CNC}"
+      sleep 1
+    else
+      printf "%s%s%s %shas not been installed correctly. See %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "$package" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+      sleep 1
+    fi
+  else
+    printf '%s%s%s %sis already installed on your system!%s\n' "${BLD}" "${CYE}" "$package" "${CGR}" "${CNC}"
+    sleep 1
+  fi
 done
 sleep 5
 clear
@@ -97,7 +107,7 @@ clear
 
 # Verifies if the archive user-dirs.dirs doesn't exist in ~/.config
 if [ ! -e "$HOME/.config/user-dirs.dirs" ]; then
-	xdg-user-dirs-update
+  xdg-user-dirs-update
 fi
 
 ########## ---------- Cloning the Rice! ---------- ##########
@@ -109,8 +119,8 @@ repo_dir="$HOME/dotfiles"
 
 # Verifies if the folder of the repository exists, and if it does, deletes it
 if [ -d "$repo_dir" ]; then
-	printf "Removing existing dotfiles repository\n"
-	rm -rf "$repo_dir"
+  printf "Removing existing dotfiles repository\n"
+  rm -rf "$repo_dir"
 fi
 
 # Clone the repository
@@ -128,29 +138,29 @@ sleep 10
 
 [ ! -d "$backup_folder" ] && mkdir -p "$backup_folder"
 
-for folder in cava alacritty dunst ncmpcpp zsh mpd paru dunst hypr mpd ncmpcpp waybar xsettingsd oh-my-posh rofi; do
-	if [ -d "$HOME/.config/$folder" ]; then
-		if mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date" 2>>RiceError.log; then
-			printf "%s%s%s folder backed up successfully at %s%s/%s_%s%s\n" "${BLD}" "${CGR}" "$folder" "${CBL}" "$backup_folder" "$folder" "$date" "${CNC}"
-			sleep 1
-		else
-			printf "%s%sFailed to backup %s folder. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "$folder" "${CBL}" "${CNC}"
-			sleep 1
-		fi
-	else
-		printf "%s%s%s folder does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "$folder" "${CYE}" "${CNC}"
-		sleep 1
-	fi
+for folder in cava alacritty bat btop tmux dunst ncmpcpp zsh mpd paru dunst hypr mpd ncmpcpp waybar xsettingsd oh-my-posh rofi; do
+  if [ -d "$HOME/.config/$folder" ]; then
+    if mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date" 2>>RiceError.log; then
+      printf "%s%s%s folder backed up successfully at %s%s/%s_%s%s\n" "${BLD}" "${CGR}" "$folder" "${CBL}" "$backup_folder" "$folder" "$date" "${CNC}"
+      sleep 1
+    else
+      printf "%s%sFailed to backup %s folder. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "$folder" "${CBL}" "${CNC}"
+      sleep 1
+    fi
+  else
+    printf "%s%s%s folder does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "$folder" "${CYE}" "${CNC}"
+    sleep 1
+  fi
 done
 
 if [ -f ~/.zshrc ]; then
-	if mv ~/.zshrc "$backup_folder"/.zshrc_"$date" 2>>RiceError.log; then
-		printf "%s%s.zshrc file backed up successfully at %s%s/.zshrc_%s%s\n" "${BLD}" "${CGR}" "${CBL}" "$backup_folder" "${date}" "${CNC}"
-	else
-		printf "%s%sFailed to backup .zshrc file. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "${CBL}" "${CNC}"
-	fi
+  if mv ~/.zshrc "$backup_folder"/.zshrc_"$date" 2>>RiceError.log; then
+    printf "%s%s.zshrc file backed up successfully at %s%s/.zshrc_%s%s\n" "${BLD}" "${CGR}" "${CBL}" "$backup_folder" "${date}" "${CNC}"
+  else
+    printf "%s%sFailed to backup .zshrc file. See %sRiceError.log%s\n" "${BLD}" "${CRE}" "${CBL}" "${CNC}"
+  fi
 else
-	printf "%s%sThe file .zshrc does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "${CYE}" "${CNC}"
+  printf "%s%sThe file .zshrc does not exist, %sno backup needed%s\n" "${BLD}" "${CGR}" "${CYE}" "${CNC}"
 fi
 
 printf "%s%sDone!!%s\n\n" "${BLD}" "${CGR}" "${CNC}"
@@ -166,34 +176,34 @@ printf "Copying files to respective directories..\n"
 [ ! -d ~/.local/share ] && mkdir -p ~/.local/share
 
 for dirs in "$repo_dir"/config/*; do
-	dir_name=$(basename "$dirs")
+  dir_name=$(basename "$dirs")
 
-	if cp -R "${dirs}" ~/.config/ 2>>RiceError.log; then
-		printf "%s%s%s %sconfiguration installed succesfully%s\n" "${BLD}" "${CYE}" "${dir_name}" "${CGR}" "${CNC}"
-		sleep 1
-	else
-		printf "%s%s%s %sconfiguration failed to been installed, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${dir_name}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-		sleep 1
-	fi
+  if cp -R "${dirs}" ~/.config/ 2>>RiceError.log; then
+    printf "%s%s%s %sconfiguration installed succesfully%s\n" "${BLD}" "${CYE}" "${dir_name}" "${CGR}" "${CNC}"
+    sleep 1
+  else
+    printf "%s%s%s %sconfiguration failed to been installed, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${dir_name}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+    sleep 1
+  fi
 done
 
 if sudo cp "$repo_dir"/misc/sddm/sddm.conf /etc/sddm.conf 2>>RiceError.log; then
-	if sudo tar xzf "$repo_dir"/misc/sddm/sugar-candy.tar.gz --directory /usr/share/sddm/themes/ 2>>RiceError.log; then
-		printf "%s%sSddm sugar candy theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-		sleep 1
-	else
-		printf "%s%sSddm theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-		sleep 1
-	fi
+  if sudo tar xzf "$repo_dir"/misc/sddm/sugar-candy.tar.gz --directory /usr/share/sddm/themes/ 2>>RiceError.log; then
+    printf "%s%sSddm sugar candy theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
+    sleep 1
+  else
+    printf "%s%sSddm theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+    sleep 1
+  fi
 else
-	printf "%s%sSddm theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-	sleep 1
+  printf "%s%sSddm theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+  sleep 1
 fi
 
 cp -f "$repo_dir"/home/.zshrc "$HOME"
 
 if [ -d $HOME/.local/share/bin ]; then
-	mkdir -p $HOME/.local/share/bin
+  mkdir -p $HOME/.local/share/bin
 fi
 
 cp -r "$repo_dir"/home/.local/share/bin "$HOME"/.local/share/
@@ -202,7 +212,7 @@ fc-cache -rv >/dev/null 2>&1
 bat cache --build
 
 if [ -d $HOME/.icons/default ]; then
-	mkdir -p $HOME/.icons/default
+  mkdir -p $HOME/.icons/default
 fi
 
 cp -f "$repo_dir"/home/.icons/default/index.theme "$HOME"/.icons/default/index.theme
@@ -211,27 +221,29 @@ unzip "$repo_dir"/mics/icons/catppuccin-mocha-mauve-cursors.zip -d $HOME/.icons/
 cp -f "$repo_dir"/home/.gtkrc-2.0 "$HOME"
 
 if [ -d $HOME/.themes ]; then
-	mkdir $HOME/.themes
+  mkdir $HOME/.themes
 fi
 
 unzip "$repo_dir"/misc/gtk/catppuccin-mocha-mauve.zip -d "$HOME"/.themes/
 
 if bash $repo_dir/scripts/install_grub_theme.sh 2>>RiceError.log; then
-	printf "%s%sGrub catppuccin theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-	sleep 1
+  printf "%s%sGrub catppuccin theme %scopied succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
+  sleep 1
 else
-	printf "%s%sGrub theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-	sleep 1
+  printf "%s%sGrub theme %sfailed to been copied, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+  sleep 1
 fi
 
 if nvidia_detect; then
-	if bash $repo_dir/scripts/configure_nvidia.sh 2>>RiceError.log; then
-		printf "%s%sNvidia %sconfigured succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
-		sleep 1
-	else
-		printf "%s%sNvidia %sfailed to been configured, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
-		sleep 1
-	fi
+  if bash $repo_dir/scripts/configure_nvidia.sh 2>>RiceError.log; then
+    printf "%s%sNvidia %sconfigured succesfully!%s\n" "${BLD}" "${CYE}" "${CGR}" "${CNC}"
+    sleep 1
+  else
+    printf "%s%sNvidia %sfailed to been configured, see %sRiceError.log %sfor more details.%s\n" "${BLD}" "${CYE}" "${CRE}" "${CBL}" "${CRE}" "${CNC}"
+    sleep 1
+  fi
+else
+  printf "%s%sNot a Nvidia GPU, skipping nvidia configuration%s\n" "${BLD}" "${CGR}" "${CNC}"
 fi
 
 # Installing Firefox-UI-Fix
@@ -239,11 +251,11 @@ read -p "Do you want to install Firefox-UI-Fix plugin? (y/n)" choice
 
 case "${choice}" in
 [Yy]*)
-	bash -c "$(curl -fsSL https://raw.githubusercontent.com/black7375/Firefox-UI-Fix/master/install.sh)"
-	;;
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/black7375/Firefox-UI-Fix/master/install.sh)"
+  ;;
 [Nn]*)
-	printf "%s%sSo be it\n" "${BLD}" "${CYE}"
-	;;
+  printf "%s%sSo be it\n" "${BLD}" "${CYE}"
+  ;;
 *) ;;
 esac
 
@@ -252,83 +264,36 @@ sleep 5
 
 ########## ---------- Installing Paru & others ---------- ##########
 
-logo "installing Paru, rofi, cava, python-pyamdgpuinfo & oh-my-posh"
+logo "installing Paru, swww, cava, python-pyamdgpuinfo, oh-my-posh, rofi, grimblast, hyprpicker, hyprshade, and zsh-vi-mode"
 
 # Installing Paru
 if command -v paru >/dev/null 2>&1; then
-	printf "%s%sParu is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+  printf "%s%sParu is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
 else
-	printf "%s%sInstalling paru%s\n" "${BLD}" "${CBL}" "${CNC}"
-	{
-		cd "$HOME" || exit
-		rustup default stable
-		rustup update
-		eval $(ssh-agent -s)
-		ssh-add
-		git clone https://aur.archlinux.org/paru.git
-		cd paru || exit
-		makepkg -si --noconfirm
-	} || {
-		printf "\n%s%sFailed to install Paru. You may need to install it manually%s\n" "${BLD}" "${CRE}" "${CNC}"
-	}
+  printf "%s%sInstalling paru%s\n" "${BLD}" "${CBL}" "${CNC}"
+  {
+    cd "$HOME" || exit
+    rustup default stable
+    rustup update
+    eval $(ssh-agent -s)
+    ssh-add
+    git clone https://aur.archlinux.org/paru.git
+    cd paru || exit
+    makepkg -si --noconfirm
+    cd "$HOME" || exit
+    rm -rf paru
+  } || {
+    printf "\n%s%sFailed to install Paru. You may need to install it manually%s\n" "${BLD}" "${CRE}" "${CNC}"
+    exit 1
+  }
 fi
 
-# Installing swww
-if command -v swww >/dev/null 2>&1; then
-	printf "%s%sSwww is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "%s%sInstalling swww%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S swww --skipreview --noconfirm
-fi
+declare -A aur_pkgs
+aur_pkgs=(["swww"]="swww" ["cava"]="cava" ["python-pyamdgpuinfo"]="python-pyamdgpuinfo" ["oh-my-posh-bin"]="oh-my-posh" ["rofi-lbonn-wayland-git"]="rofi" ["grimblast-git"]="grimblast" ["hyprpicker"]="hyprpicker" ["hyprshade"]="hyprshade")
 
-# Installing cava
-if command -v cava >/dev/null 2>&1; then
-	printf "\n%s%scava is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling cava, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S cava --skipreview --noconfirm
-fi
-
-# Installing python-pyamdgpuinfo
-if command -v python-pyamdgpuinfo >/dev/null 2>&1; then
-	printf "\n%s%spython-pyamdgpuinfo is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling python-pyamdgpuinfo, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S python-pyamdgpuinfo --skipreview --noconfirm
-fi
-
-# Installing oh-my-posh
-curl -s https://ohmyposh.dev/install.sh | sudo bash -s
-
-# Installing rofi-lbonn-wayland-git
-
-if command -v rofi >/dev/null 2>&1; then
-	printf "\n%s%srofi-lbonn-wayland-git is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling rofi-lbonn-wayland-git, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S rofi-lbonn-wayland-git --skipreview --noconfirm
-fi
-
-if command -v grimblast >/dev/null 2>&1; then
-	printf "\n%s%sgrimblast is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling grimblast, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S grimblast-git --skipreview --noconfirm
-fi
-
-if command -v hyprpicker >/dev/null 2>&1; then
-	printf "\n%s%shyprpicker is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling hyprpicker, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S hyprpicker --skipreview --noconfirm
-fi
-
-if command -v hyprshade >/dev/null 2>&1; then
-	printf "\n%s%shyprshade is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-else
-	printf "\n%s%sInstalling hyprshade, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
-	paru -S hyprshade --skipreview --noconfirm
-fi
+for pkg in "${!aur_pkgs[@]}"; do
+  install_aur_pkg "$pkg" "${aur_pkgs[$pkg]}"
+done
 
 printf "\n%s%sInstalling zsh-vi-mode, this should be fast!%s\n" "${BLD}" "${CBL}" "${CNC}"
 paru -S zsh-vi-mode --skipreview --noconfirm
@@ -339,9 +304,9 @@ logo "Enabling mpd service"
 
 # Verifica si el servicio mpd está habilitado a nivel global (sistema)
 if systemctl is-enabled --quiet mpd.service; then
-	printf "\n%s%sDisabling and stopping the global mpd service%s\n" "${BLD}" "${CBL}" "${CNC}"
-	sudo systemctl stop mpd.service
-	sudo systemctl disable mpd.service
+  printf "\n%s%sDisabling and stopping the global mpd service%s\n" "${BLD}" "${CBL}" "${CNC}"
+  sudo systemctl stop mpd.service
+  sudo systemctl disable mpd.service
 fi
 
 printf "\n%s%sEnabling and starting the user-level mpd service%s\n" "${BLD}" "${CYE}" "${CNC}"
@@ -359,11 +324,11 @@ sleep 2
 logo "Changing default shell to zsh"
 
 if [[ $SHELL != "/usr/bin/zsh" ]]; then
-	printf "\n%s%sChanging your shell to zsh. Your root password is needed.%s\n\n" "${BLD}" "${CYE}" "${CNC}"
-	# Cambia la shell a zsh
-	chsh -s /usr/bin/zsh
-	printf "%s%sShell changed to zsh. Please reboot.%s\n\n" "${BLD}" "${CGR}" "${CNC}"
+  printf "\n%s%sChanging your shell to zsh. Your root password is needed.%s\n\n" "${BLD}" "${CYE}" "${CNC}"
+  # Cambia la shell a zsh
+  chsh -s /usr/bin/zsh
+  printf "%s%sShell changed to zsh. Please reboot.%s\n\n" "${BLD}" "${CGR}" "${CNC}"
 else
-	printf "%s%sYour shell is already zsh\nGood bye! installation finished, now reboot%s\n" "${BLD}" "${CGR}" "${CNC}"
+  printf "%s%sYour shell is already zsh\nGood bye! installation finished, now reboot%s\n" "${BLD}" "${CGR}" "${CNC}"
 fi
 zsh
