@@ -138,7 +138,7 @@ sleep 10
 
 [ ! -d "$backup_folder" ] && mkdir -p "$backup_folder"
 
-for folder in cava alacritty bat btop tmux dunst ncmpcpp zsh mpd paru dunst hypr mpd ncmpcpp waybar xsettingsd oh-my-posh rofi; do
+for folder in cava alacritty bat btop fastfetch tmux dunst ncmpcpp zsh mpd paru dunst hypr mpd ncmpcpp waybar xsettingsd oh-my-posh rofi; do
   if [ -d "$HOME/.config/$folder" ]; then
     if mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date" 2>>RiceError.log; then
       printf "%s%s%s folder backed up successfully at %s%s/%s_%s%s\n" "${BLD}" "${CGR}" "$folder" "${CBL}" "$backup_folder" "$folder" "$date" "${CNC}"
