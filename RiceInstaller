@@ -261,6 +261,7 @@ read -p "Do you want to use my neovim configuration? (y/n)" choice
 
 case "${choice}" in
 [Yy]*)
+  sudo pacman -S --needed --noconfirm python go npm composer
   git clone https://github.com/404GH0ST/my-nvchad-configuration.git ~/.config/nvim
   ;;
 [Nn]*) ;;
